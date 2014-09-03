@@ -1,5 +1,14 @@
 /*global module:false*/
 module.exports = function(grunt) {
+  //Environment Configuration
+  var dotenv = require('dotenv');
+  dotenv.load();
+
+  var ftpAuthOptions = {
+    host: process.env.FTP_HOST,
+    port: process.env.FTP_PORT || 21,
+    authKey: process.env.FTP_AUTH_KEY
+  };
 
   // Project configuration.
   grunt.initConfig({
@@ -70,15 +79,12 @@ module.exports = function(grunt) {
     },
     'ftp-deploy': {
       build: {
-        auth: {
-          host: 'mazwok.com',
-          port: 21,
-          authKey: 'dev'
-        },
+        auth: ftpAuthOptions,
         src: './',
         dest: '/',
         exclusions: [
           '.git',
+          '.env',
           'node_modules', 
           '.ftppass', 
           '.gitignore', 
