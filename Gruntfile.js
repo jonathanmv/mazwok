@@ -67,6 +67,26 @@ module.exports = function(grunt) {
         files: '<%= jshint.lib_test.src %>',
         tasks: ['jshint:lib_test', 'qunit']
       }
+    },
+    'ftp-deploy': {
+      build: {
+        auth: {
+          host: 'mazwok.com',
+          port: 21,
+          authKey: 'dev'
+        },
+        src: './',
+        dest: '/',
+        exclusions: [
+          '.git',
+          'node_modules', 
+          '.ftppass', 
+          '.gitignore', 
+          'Gruntfile.js', 
+          'package.json', 
+          'README.md'
+        ]
+      }
     }
   });
 
@@ -76,6 +96,7 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-qunit');
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-watch');
+  grunt.loadNpmTasks('grunt-ftp-deploy');
 
   // Default task.
   grunt.registerTask('default', ['jshint', 'qunit', 'concat', 'uglify']);
